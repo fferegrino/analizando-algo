@@ -26,7 +26,7 @@ Con base en el archivo de entrada proporcionado que tiene 200,000 números difer
 
 ***
 
-#### Práctica 1: "Análisis temporal y notación de orden (Algoritmos de busqueda)"
+#### Práctica 2: "Análisis temporal y notación de orden (Algoritmos de busqueda)"
 Con base en el ordenamiento obtenido a partir del archivo de entrada de la práctica 01 que tiene 200,000 números diferentes.
 Realizar la búsqueda de elementos bajo 3 métodos de búsqueda y variantes con procesos ligeros, realizar el análisis teórico y experimental de las complejidades; así como encontrar las cotas de los algoritmos.
 * Búsqueda lineal o secuencial (No recursiva)
@@ -39,7 +39,7 @@ Modificar los tres algoritmos para trabajar con procesos ligeros (Hilos).
 
 ***
 
-#### Práctica 3: "Divide y venceras (Rotación de una imagen)"
-Implementar el algoritmo de rotación de imágenes que emplea la técnica Divide y Vencerás.
+#### Práctica 3: "Divide y vencerás (Rotación de una imagen)"
+Implementar el algoritmo de rotación de imágenes que emplea la técnica divide y vencerás. La imágen a girar es cuadrada, y es un .bmp de 24 bits.
  
 [Práctica 3](/Práctica 3)
