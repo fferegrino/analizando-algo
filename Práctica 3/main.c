@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 	strcpy(IMAGEN, argv[1]);
 	strcpy(IMAGEN_OUT, argv[2]);
 
-	abrir_imagen(&img, IMAGEN);
+	abrirImagen(&img, IMAGEN);
 
 	uswtime(&usrtime11, &systime11, &walltime11);
 	if(tipoEjecucion == 'N') // Ejecucion normal DYV
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 	}
 	else // Rotacion clásica
 	{
-		rotacion_clasica(&img,&img);
+		rotacionClasica(&img,&img);
 	}
 	uswtime(&usrtime21, &systime21, &walltime21);	
 	// Calculo de los tiempos
@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
 	else
 		printf("Clasica|%d|%.10f|%.10f|%.10f|%.10f\n",img.alto,real,user,sys,cpuwall);		
 
-    	crear_imagen(&img, IMAGEN_OUT);
+    	guardarImagen(&img, IMAGEN_OUT);
 
 	//Terminar programa normalmente	
 	exit(0);

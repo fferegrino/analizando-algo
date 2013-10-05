@@ -19,10 +19,13 @@
 #include "BMP.h"
 
 //
-// Prototipos de funciones "privadas"
+// Prototipos de funciones no expuestas en la cabecera
 //
 void traslacion(int i, int j, int i1, int j1, BMP * imagen, int n);
-void rotacion_base(int i, int j, int i1, int j1, BMP * imagen, int n);
+void traslacionM(int i, int j, int i1, int j1, unsigned char ** matriz, int n);
+void rotacionBase(int i, int j, int i1, int j1, BMP * imagen, int n);
+void rotacionBaseM(int i, int j, int i1, int j1, unsigned char ** matriz, int n);
+
 /**
  * Función propia de la ejecución con hilos
  */
@@ -33,12 +36,12 @@ void ejecutaRotacion(void * imagen);
 //
 typedef struct bmpAux
 {
-	int i;		// Inicio del rango de pixeles a tratar	
-	int j;		// Inicio del rango de pixeles a tratar
-	int i1;		// Final del rango de pixeles a tratar
-	int j1;		// Final del rango de pixeles a tratar	
-	int n;		// Tamaño del problema
-	BMP * imagen;	// Apuntador a imagen
+	int i;		   // Inicio del rango de pixeles a tratar	
+	int j;		   // Inicio del rango de pixeles a tratar
+	int i1;		   // Final del rango de pixeles a tratar
+	int j1;		   // Final del rango de pixeles a tratar	
+	int n;		   // Tamaño del problema
+	BMP * imagen;  // Apuntador a imagen
 }BMPAux;
 
 
@@ -51,7 +54,7 @@ typedef struct bmpAux
  * @param imagen La estructura en la que residirá la información de la imagen abierta
  * @param ruta La ruta en la que se encuentra la imagen que deseamos abrir
  */
-void abrir_imagen(BMP* imagen, char* ruta) {
+void abrirImagen(BMP* imagen, char* ruta) {
     FILE *archivo; //Puntero FILE para el archivo de imágen a abrir
     int i, j, k, resto;
     unsigned char R, B, G, var;
@@ -144,7 +147,7 @@ void abrir_imagen(BMP* imagen, char* ruta) {
  * @param imagen La estructura en la que está la información relacionada con la imagen que queremos guardar
  * @param ruta La ruta en la que vamos a guardar
  */
-void crear_imagen(BMP *imagen, char *ruta) {
+void guardarImagen(BMP *imagen, char *ruta) {
     FILE *archivo; //Puntero FILE para el archivo de imágen a abrir
 
     int i, j, k, resto, var;
@@ -204,11 +207,11 @@ void crear_imagen(BMP *imagen, char *ruta) {
 }
 
 /**
- * Función encargada de rotar una imagen la cantidad de grados especificada
+ * Función encargada de rotar una imagen usando el algoritmo clásico
  * @param imagenOriginal La imagen original a ser tratada
  * @param imagenTratada Estructura en el que se guardará la imagen tratada
  */
-void rotacion_clasica(BMP *imagenOriginal, BMP * imagenTratada) {
+void rotacionClasica(BMP *imagenOriginal, BMP * imagenTratada) {
     int i;
     int j;
     int n = imagenOriginal->alto;
@@ -217,15 +220,20 @@ void rotacion_clasica(BMP *imagenOriginal, BMP * imagenTratada) {
             imagenTratada->pixelR[i][j] = imagenOriginal->pixelR[n - j - 1][i];
             imagenTratada->pixelB[i][j] = imagenOriginal->pixelB[n - j - 1][i];
             imagenTratada->pixelG[i][j] = imagenOriginal->pixelG[n - j - 1][i];
-
-            // Rotación 180
-            // imagenTratada->pixelR[i][j] = imagenOriginal->pixelR[n - i - 1][j];
-            // imagenTratada->pixelB[i][j] = imagenOriginal->pixelB[n - i - 1][j];
-            // imagenTratada->pixelG[i][j] = imagenOriginal->pixelG[n - i - 1][j];
         }
     }
 }
 
+/**
+ * Función encargada de rotar una imagen la cantidad de grados especificada mediante el uso de un algoritmo con la técnica 
+ * divide y vencerás
+ * @param i El inicio del rango a tratar
+ * @param j El inicio del rango a tratar
+ * @param i1 El final del rango a tratar
+ * @param j1 El final del rango a tratar
+ * @param imagen La imagen original a ser tratada
+ * @param n El tamaño del problema
+ */
 void rota90GradosDivide(int i, int j, int i1, int j1, BMP * imagen, int n) {
     if (n > 1) {
         rota90GradosDivide(i, j, (n / 2) + i, (n / 2) + j, imagen, n / 2);
@@ -236,113 +244,164 @@ void rota90GradosDivide(int i, int j, int i1, int j1, BMP * imagen, int n) {
     traslacion(i, j, i1, j1, imagen, n / 2);
 }
 
+/**
+ * Función encargada de rotar una imagen la cantidad de grados especificada mediante el uso de un algoritmo con la técnica 
+ * divide y vencerás, que además incorpora el uso de threads para acelerar su ejecución
+ * @param i El inicio del rango a tratar
+ * @param j El inicio del rango a tratar
+ * @param i1 El final del rango a tratar
+ * @param j1 El final del rango a tratar
+ * @param imagen La imagen original a ser tratada
+ * @param n El tamaño del problema
+ */
 void rota90GradosDivideThreads(int i, int j, int i1, int j1, BMP * imagen, int n) {
     if (n > 1) {
-	int matrices = 4;
-	// Comenzamos la
-	// repartición de los subarreglos
-	pthread_t *thread;
-	thread = malloc(matrices*sizeof(pthread_t));
-	// Creamos los auxiliares 
-	BMPAux * c11 = (BMPAux *)malloc(sizeof(BMPAux));
-	(*c11).i = i; 
-	(*c11).j = j; 
-	(*c11).i1 = (n / 2) + i; 
-	(*c11).j1 = (n / 2) + j;
-	(*c11).n = (n / 2);
-	(*c11).imagen = imagen;
+    	int matrices = 4;
+    	// Comenzamos la
+    	// repartición de los subarreglos
+    	pthread_t *thread;
+    	thread = malloc(matrices*sizeof(pthread_t));
+    	// Creamos los auxiliares 
+    	BMPAux * c11 = (BMPAux *)malloc(sizeof(BMPAux));
+    	(*c11).i = i; 
+    	(*c11).j = j; 
+    	(*c11).i1 = (n / 2) + i; 
+    	(*c11).j1 = (n / 2) + j;
+    	(*c11).n = (n / 2);
+    	(*c11).imagen = imagen;
 
 
-	BMPAux * c12 = (BMPAux *)malloc(sizeof(BMPAux));
-	(*c12).i = i + (n / 2); 
-	(*c12).j = j; 
-	(*c12).i1 = n + i; 
-	(*c12).j1 = (n / 2) + j;
-	(*c12).n = (n / 2);
-	(*c12).imagen = imagen;
+    	BMPAux * c12 = (BMPAux *)malloc(sizeof(BMPAux));
+    	(*c12).i = i + (n / 2); 
+    	(*c12).j = j; 
+    	(*c12).i1 = n + i; 
+    	(*c12).j1 = (n / 2) + j;
+    	(*c12).n = (n / 2);
+    	(*c12).imagen = imagen;
 
-	BMPAux * c21 = (BMPAux *)malloc(sizeof(BMPAux));
-	(*c21).i = i + (n / 2); 
-	(*c21).j =  j + (n / 2); 
-	(*c21).i1 = n + i; 
-	(*c21).j1 = n + j;
-	(*c21).n = (n / 2);
-	(*c21).imagen = imagen;
+    	BMPAux * c21 = (BMPAux *)malloc(sizeof(BMPAux));
+    	(*c21).i = i + (n / 2); 
+    	(*c21).j =  j + (n / 2); 
+    	(*c21).i1 = n + i; 
+    	(*c21).j1 = n + j;
+    	(*c21).n = (n / 2);
+    	(*c21).imagen = imagen;
 
-	BMPAux * c22 = (BMPAux *)malloc(sizeof(BMPAux));
-	(*c22).i = i; 
-	(*c22).j =  j + (n / 2); 
-	(*c22).i1 = (n / 2) + i; 
-	(*c22).j1 = n + j;
-	(*c22).n = (n / 2);
-	(*c22).imagen = imagen;
+    	BMPAux * c22 = (BMPAux *)malloc(sizeof(BMPAux));
+    	(*c22).i = i; 
+    	(*c22).j =  j + (n / 2); 
+    	(*c22).i1 = (n / 2) + i; 
+    	(*c22).j1 = n + j;
+    	(*c22).n = (n / 2);
+    	(*c22).imagen = imagen;
 
-	// Creamos los hilos
-	if(pthread_create(&thread[0], NULL, ejecutaRotacion, (void *)c11) != 0)
-	{
-		perror("El thread no  pudo crearse [Arbol]\n");
-		exit(-1);
-	}
-	if(pthread_create(&thread[1], NULL, ejecutaRotacion, (void *)c12) != 0)
-	{
-		perror("El thread no  pudo crearse [Arbol]\n");
-		exit(-1);
-	}
-	if(pthread_create(&thread[2], NULL, ejecutaRotacion, (void *)c21) != 0)
-	{
-		perror("El thread no  pudo crearse [Arbol]\n");
-		exit(-1);
-	}
-	if(pthread_create(&thread[3], NULL, ejecutaRotacion, (void *)c22) != 0)
-	{
-		perror("El thread no  pudo crearse [Arbol]\n");
-		exit(-1);
-	}
-	// Esperamos a los hilos
-	int i;
-	for (i=0; i<matrices; i++) pthread_join (thread[i], NULL);
-	free(thread);
+    	// Creamos los hilos
+    	if(pthread_create(&thread[0], NULL, ejecutaRotacion, (void *)c11) != 0)
+    	{
+    		perror("El thread no  pudo crearse [Arbol]\n");
+    		exit(-1);
+    	}
+    	if(pthread_create(&thread[1], NULL, ejecutaRotacion, (void *)c12) != 0)
+    	{
+    		perror("El thread no  pudo crearse [Arbol]\n");
+    		exit(-1);
+    	}
+    	if(pthread_create(&thread[2], NULL, ejecutaRotacion, (void *)c21) != 0)
+    	{
+    		perror("El thread no  pudo crearse [Arbol]\n");
+    		exit(-1);
+    	}
+    	if(pthread_create(&thread[3], NULL, ejecutaRotacion, (void *)c22) != 0)
+    	{
+    		perror("El thread no  pudo crearse [Arbol]\n");
+    		exit(-1);
+    	}
+    	// Esperamos a los hilos
+    	int i;
+    	for (i=0; i<matrices; i++) pthread_join (thread[i], NULL);
+    	free(thread);
 
     }
     traslacion(i, j, i1, j1, imagen, n / 2);
 }
 
 /*
- * Funciones "privadas", no expuestas
+ * Funciones "privadas", no expuestas en el archivo de cabecera
  */
 
 void traslacion(int i, int j, int i1, int j1, BMP * imagen, int n) {
     if (i < i1 - n) {
-        rotacion_base(i, j, i1, j1, imagen, n);
+        rotacionBaseM(i, j, i1, j1, imagen->pixelB, n);
+        rotacionBaseM(i, j, i1, j1, imagen->pixelR, n);
+        rotacionBaseM(i, j, i1, j1, imagen->pixelG, n);
         traslacion(i + 1, j, i1, j1, imagen, n);
     }
 }
 
-void rotacion_base(int i, int j, int i1, int j1, BMP * imagen, int n) {
+void traslacionM(int i, int j, int i1, int j1, unsigned char ** matriz, int n) {
+    if (i < i1 - n) {
+        rotacionBaseM(i, j, i1, j1, matriz, n);
+        traslacionM(i + 1, j, i1, j1, matriz, n);
+    }
+}
+
+/**
+ * Función que aplica el algoritmo de rotación recursivo a una una imagen
+ * @param i El inicio del rango a tratar
+ * @param j El inicio del rango a tratar
+ * @param i1 El final del rango a tratar
+ * @param j1 El final del rango a tratar
+ * @param imagen La imagen a rotar
+ * @param n El tamaño del problema
+ */
+void rotacionBase(int i, int j, int i1, int j1, BMP * imagen, int n) {
     if (j < j1 - n) {
-	// Rotación azul
         char px = imagen->pixelB[i][j];
         imagen->pixelB[i][j] = imagen->pixelB[i + n][j];
         imagen->pixelB[i + n][j] = imagen->pixelB[i + n][j + n];
         imagen->pixelB[i + n][j + n] = imagen->pixelB[i][j + n];
         imagen->pixelB[i][j + n] = px;
 
-	px = imagen->pixelR[i][j];
+        px = imagen->pixelR[i][j];
         imagen->pixelR[i][j] = imagen->pixelR[i + n][j];
         imagen->pixelR[i + n][j] = imagen->pixelR[i + n][j + n];
         imagen->pixelR[i + n][j + n] = imagen->pixelR[i][j + n];
         imagen->pixelR[i][j + n] = px;
 
-	px = imagen->pixelG[i][j];
+        px = imagen->pixelG[i][j];
         imagen->pixelG[i][j] = imagen->pixelG[i + n][j];
         imagen->pixelG[i + n][j] = imagen->pixelG[i + n][j + n];
         imagen->pixelG[i + n][j + n] = imagen->pixelG[i][j + n];
         imagen->pixelG[i][j + n] = px;
-        rotacion_base(i, j + 1, i1, j1, imagen, n);
+        rotacionBase(i, j + 1, i1, j1, imagen, n);
     }
 }
 
+/**
+ * Función que aplica el algoritmo de rotación recursivo a una matriz de caracteres de forma individual
+ * @param i El inicio del rango a tratar
+ * @param j El inicio del rango a tratar
+ * @param i1 El final del rango a tratar
+ * @param j1 El final del rango a tratar
+ * @param matriz La matriz a rotar
+ * @param n El tamaño del problema
+ */
+void rotacionBaseM(int i, int j, int i1, int j1, unsigned char ** matriz, int n) {
+    if (j < j1 - n) {
+        char px = matriz[i][j];
+        matriz[i][j] = matriz[i + n][j];
+        matriz[i + n][j] = matriz[i + n][j + n];
+        matriz[i + n][j + n] = matriz[i][j + n];
+        matriz[i][j + n] = px;
+        rotacionBaseM(i, j + 1, i1, j1, matriz, n);
+    }
+}
+
+/**
+ * Auxiliar en la ejecución del algoritmo de rotación usando hilos
+ * @param imagen
+ */
 void ejecutaRotacion(void * imagen){
 	BMPAux * aux = (BMPAux *)imagen;
-        rota90GradosDivide(aux->i, aux->j, aux->i1, aux->j1, aux->imagen, aux->n);
+    rota90GradosDivide(aux->i, aux->j, aux->i1, aux->j1, aux->imagen, aux->n);
 }

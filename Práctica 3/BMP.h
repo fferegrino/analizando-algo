@@ -49,14 +49,14 @@ extern "C" {
      * @param imagen La estructura en la que residirá la información de la imagen abierta
      * @param ruta La ruta en la que se encuentra la imagen que deseamos abrir
      */
-    void abrir_imagen(BMP *imagen, char *ruta);
+    void abrirImagen(BMP *imagen, char *ruta);
     
     /**
      * Función encargada de guardar una imagen en la ruta especificada
      * @param imagen La estructura en la que está la información relacionada con la imagen que queremos guardar
      * @param ruta La ruta en la que vamos a guardar
      */
-    void crear_imagen(BMP *imagen, char *ruta);
+    void guardarImagen(BMP *imagen, char *ruta);
     
     /**
      * Función encargada de rotar una imagen la cantidad de grados especificada mediante el uso del algoritmo clásico de rotacion
@@ -64,7 +64,7 @@ extern "C" {
      * @param imagenOriginal La imagen original a ser tratada
      * @param imagenTratada Estructura en el que se guardará la imagen tratada
      */
-    void rotacion_clasica(BMP *imagenOriginal, BMP * imagenTratada);
+    void rotacionClasica(BMP *imagenOriginal, BMP * imagenTratada);
     
 	/**
 	 * Función encargada de rotar una imagen la cantidad de grados especificada mediante el uso de un algoritmo con la técnica 
