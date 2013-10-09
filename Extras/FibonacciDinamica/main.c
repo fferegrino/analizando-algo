@@ -1,39 +1,54 @@
-/* 
- * File:   main.c
- * Author: Antonio
- *
- * Created on 8 de octubre de 2013, 01:19 PM
- */
-
 #include <stdio.h>
 #include <stdlib.h>
-#include "linkedList.h"
+#include "cola.h"
 
 
-long long fibonacci(int n);
+long long fibonacciCola(int n);
+long long fibonacciArreglo(int n);
 
 /*
  * 
  */
 int main(int argc, char** argv) {
 
-    long long fibonachi = fibonacci(46);
+    long long fiboL = fibonacciCola(20);
+    printf("Lista\t%ld\n", fiboL);
 
-    printf(" %ld ", fibonachi);
+    long long fiboA = fibonacciArreglo(20);
+    printf("Arreglo\t%ld\n", fiboA);
 
     return (EXIT_SUCCESS);
 }
 
-long long fibonacci(int n) {
-    LinkedList lista;
-    creaLista(&lista);
-    insertaValor(&lista, 0);
-    insertaValor(&lista, 1);
+long long fibonacciCola(int n) {
+    Cola cola;
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    creaLista(&cola);
+    formar(&cola, 0);
+    formar(&cola, 1);
     int i;
     for (i = 2; i <= n; i++) {
-        long long fi1 = eliminaCabeza(&lista);
-        long long fi2 = valorCabeza(&lista);
-        insertaValor(&lista, fi1 + fi2);
+        // Quitamos el elemento menos reciente
+        long long fi1 = atender(&cola);
+        // Obtenemos el valor del siguiente más reciente
+        long long fi2 = valorPrincipio(&cola);
+        // Almacenamos el resultado en la cola
+        formar(&cola, fi1 + fi2);
     }
-    return valorCola(&lista);
+    return valorFinal(&cola);
+}
+
+long long fibonacciArreglo(int n) {
+    long long * lista;
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    lista = (long long *) malloc(sizeof (long long) * n);
+    lista[0] = 0;
+    lista[1] = 1;
+    int i;
+    for (i = 2; i <= n; i++) {
+        lista[i] = lista[i - 1] + lista[i - 2];
+    }
+    return lista[n];
 }
