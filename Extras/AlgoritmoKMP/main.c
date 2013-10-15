@@ -18,16 +18,22 @@ int encuentraOcurrenciasKMP(char palabra[], char patron[], int longitudPalabra, 
 int main(int argc, char** argv) {
     char * cadenaTest;
     char * cadenaBuscar;
+    
     if (argc == 3) {
+        // Leemos los argumentos de la consola
         cadenaTest = argv[1];
         cadenaBuscar = argv[2];
     }else{
+        // O seleccionamos unos por default
         cadenaTest = "Lorem ipsum dolor sit amet.";
         cadenaBuscar = "m";
     }
+    
     int p1l = strlen(cadenaTest);
     int p2l = strlen(cadenaBuscar);
     int s = encuentraOcurrenciasKMP(cadenaTest, cadenaBuscar, p1l, p2l);
+    
+    // Imprimimos el resultado
     printf("Ocurrencias de \"%s\" en \"%s\": %d\n",cadenaBuscar, cadenaTest,s);
     return (EXIT_SUCCESS);
 }
@@ -40,25 +46,25 @@ int main(int argc, char** argv) {
  */
 void construyeVectorFallo(char palabra[], int longitudPalabra, int vector[]) {
     // Variables de control
-    int posicion = 2;
-    int cnd = 0;
+    int i = 1;
+    int j = 0;
 
     // Las dos primeras posiciones son fijas
     vector[0] = -1;
     vector[1] = 0;
 
     // Relleno del vector
-    while (posicion <= longitudPalabra) {
-        if (palabra[posicion - 1] == palabra[cnd]) {
-            cnd++;
-            vector[posicion] = cnd;
-            posicion++;
+    while (i < longitudPalabra) {
+        if (palabra[j] == palabra[i]) {
+            // Un caracter previo coincide
+            vector[i] = j + 1;
+            i++;
+            j++;
+        } else if (j > 0) {
+            j = vector[j - 1];
         } else {
-            if (cnd > 0) {
-                cnd += vector[cnd];
-            }
-            vector[posicion] = 0;
-            posicion++;
+            vector[i] = 0;
+            i++;
         }
     }
 }
@@ -82,6 +88,7 @@ int encuentraOcurrenciasKMP(char palabraBuscar[], char patron[], int tamanoPalab
     if (tamanoPalabra >= tamanoPatron) {
         // Construcción de la tabla de fallo
         construyeVectorFallo(palabraBuscar, tamanoPalabra, vector);
+        
         while (m <= (tamanoPalabra - tamanoPatron)) {
             if (patron[i] == palabraBuscar[m + i]) {
                 if (i == (tamanoPatron - 1)) {
