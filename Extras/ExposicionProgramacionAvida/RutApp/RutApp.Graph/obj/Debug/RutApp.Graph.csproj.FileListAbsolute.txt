@@ -1,0 +1,10 @@
+C:\Users\Antonio\Documents\RutApp\RutApp.Graph\obj\Debug\RutApp.Graph.csprojResolveAssemblyReference.cache
+C:\Users\Antonio\Documents\RutApp\RutApp.Graph\bin\Debug\RutApp.Graph.dll.config
+C:\Users\Antonio\Documents\RutApp\RutApp.Graph\bin\Debug\RutApp.Graph.dll
+C:\Users\Antonio\Documents\RutApp\RutApp.Graph\bin\Debug\RutApp.Graph.pdb
+C:\Users\Antonio\Documents\RutApp\RutApp.Graph\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\Users\Antonio\Documents\RutApp\RutApp.Graph\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\Users\Antonio\Documents\RutApp\RutApp.Graph\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.xml
+C:\Users\Antonio\Documents\RutApp\RutApp.Graph\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.xml
+C:\Users\Antonio\Documents\RutApp\RutApp.Graph\obj\Debug\RutApp.Graph.dll
+C:\Users\Antonio\Documents\RutApp\RutApp.Graph\obj\Debug\RutApp.Graph.pdb

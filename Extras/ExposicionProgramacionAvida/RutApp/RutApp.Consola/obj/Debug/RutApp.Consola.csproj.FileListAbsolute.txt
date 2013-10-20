@@ -1,0 +1,12 @@
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\bin\Debug\RutApp.Consola.exe.config
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\bin\Debug\RutApp.Consola.exe
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\bin\Debug\RutApp.Consola.pdb
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\bin\Debug\RutApp.Graph.dll
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\bin\Debug\RutApp.Graph.pdb
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.xml
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.xml
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\obj\Debug\RutApp.Consola.csprojResolveAssemblyReference.cache
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\obj\Debug\RutApp.Consola.exe
+C:\Users\Antonio\Documents\RutApp\RutApp.Consola\obj\Debug\RutApp.Consola.pdb
