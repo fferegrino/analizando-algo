@@ -1,7 +1,10 @@
 analizando-algo
 ===============
 
-#### Código de las prácticas para la materia Análisis de Algoritmos de la ESCOM
+#### Códigos inspirados por la materia Análisis de Algoritmos de la ESCOM
+
+En esta unidad de aprendizaje (que he de confesar es mi favorita) tenemos que implementar muchos algoritmos, y es por eso que decidí crear este repositorio, para mantener la historia de casi todo lo que hice en ella.
+
 A lo largo del semestre tendremos que desarrollar diversas prácticas para analizar el comportamiento de las técnicas de algoritmia más reconocidas
 Aquí es donde iré colocando el código de dichas prácticas, así como algunos ejemplos y casos de prueba.
 
