@@ -59,5 +59,6 @@ Al momento están ahí:
 1. Implementación cálculo de la sucesión de Fibonacci usando programación dinámica
 2. Algoritmo de Knuth-Morris-Prat para la búsqueda de subcadenas
 3. Algoritmo que calcula la distancia de Levenshtein
+4. Implementación del algoritmo de Dijkstra para el cálculo de la distancia entre dos nodos (exposición)
  
 [Extras](/Extras)
