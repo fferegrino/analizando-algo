@@ -17,7 +17,7 @@ Las que estén preparadas para correrse en un entorno Windows, contendrán un ar
 
 ##### Las prácticas son las siguientes:
 
-#### Práctica 1: "Pruebas a posteriori (Algoritmos de ordenamiento)" 
+#### Práctica 1: "Pruebas a posteriori (Algoritmos de ordenamiento)" [C]
 Con base en el archivo de entrada proporcionado que tiene 200,000 números diferentes. Ordenarlo bajo los siguientes métodos de ordenamiento y comparar experimentalmente las complejidades de estos.
 
 * Burbuja (Bubble Sort)
@@ -32,7 +32,7 @@ Con base en el archivo de entrada proporcionado que tiene 200,000 números difer
 
 ***
 
-#### Práctica 2: "Análisis temporal y notación de orden (Algoritmos de busqueda)"
+#### Práctica 2: "Análisis temporal y notación de orden (Algoritmos de busqueda)" [C]
 Con base en el ordenamiento obtenido a partir del archivo de entrada de la práctica 01 que tiene 200,000 números diferentes.
 Realizar la búsqueda de elementos bajo 3 métodos de búsqueda y variantes con procesos ligeros, realizar el análisis teórico y experimental de las complejidades; así como encontrar las cotas de los algoritmos.
 * Búsqueda lineal o secuencial (No recursiva)
@@ -45,7 +45,7 @@ Modificar los tres algoritmos para trabajar con procesos ligeros (Hilos).
 
 ***
 
-#### Práctica 3: "Divide y vencerás (Rotación de una imagen)"
+#### Práctica 3: "Divide y vencerás (Rotación de una imagen)" [C]
 Implementar el algoritmo de rotación de imágenes que emplea la técnica divide y vencerás. La imágen a girar es cuadrada, y es un .bmp de 24 bits.
  
 [Práctica 3](/Práctica 3)
@@ -56,9 +56,10 @@ Implementar el algoritmo de rotación de imágenes que emplea la técnica divide
 En este folder están otros códigos relacionados con la asignatura, provenientes de tareas, investigaciones o mi simple curiosidad.
 Al momento están ahí:
 
-1. Implementación cálculo de la sucesión de Fibonacci usando programación dinámica
-2. Algoritmo de Knuth-Morris-Prat para la búsqueda de subcadenas
-3. Algoritmo que calcula la distancia de Levenshtein
-4. Implementación del algoritmo de Dijkstra para el cálculo de la distancia entre dos nodos (exposición)
+1. Implementación cálculo de la sucesión de Fibonacci usando programación dinámica [C}
+2. Algoritmo de Knuth-Morris-Prat para la búsqueda de subcadenas [C]
+3. Algoritmo que calcula la distancia de Levenshtein [C]
+4. Implementación del algoritmo de Dijkstra para el cálculo de la distancia entre dos nodos (exposición) [C#]
+5. Algoritmo de selección de actividades [Python]
  
 [Extras](/Extras)
