@@ -17,8 +17,8 @@ namespace RutApp.Graph.Entidades
         public string Linea { get; set; }
         public string TipoEstacion { get; set; }
         public List<Conexion> Conexiones { get; set; }
-        public decimal EtiquetaPesoAcumulado { get; set; }
-        public Estacion EtiquetaPredecesora{ get; set; }
+        public decimal PesoAcumulado { get; set; }
+        public Estacion EstacionPredecesora{ get; set; }
 
 
         public Estacion(string idEstacion)

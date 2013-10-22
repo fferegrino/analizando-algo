@@ -37,6 +37,8 @@ namespace RutApp.Consola
             // Calculamos la ruta:
             Ruta r = g.EncontrarRuta(latI, longI, latF, longF);
             int estaciones = r.Estaciones.Count;
+            Console.WriteLine();
+            Console.WriteLine("Ruta:\n");
             Console.WriteLine(String.Join(" - ", r.Estaciones));
             Console.Read();
         }

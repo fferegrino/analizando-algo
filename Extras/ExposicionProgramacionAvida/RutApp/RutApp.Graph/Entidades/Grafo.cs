@@ -75,13 +75,13 @@ namespace RutApp.Graph.Entidades
             }
 
             auxiliar = minimos[minimos.IndexOf(auxiliar)];
-            distancia = auxiliar.EtiquetaPesoAcumulado;
-            // crea una pila para almacenar la ruta desde el nodo final al origen
+            distancia = auxiliar.PesoAcumulado;
+            // Se usa una pila para almacenar la ruta
             Stack<Estacion> pila = new Stack<Estacion>();
             while (auxiliar != null)
             {
                 pila.Push(auxiliar);
-                auxiliar = auxiliar.EtiquetaPredecesora;
+                auxiliar = auxiliar.EstacionPredecesora;
             }
             // Vaciar la pila para armar la ruta correcta
             while (pila.Count > 0)
@@ -107,28 +107,30 @@ namespace RutApp.Graph.Entidades
             {
                 // Sacamos un elemento de la lista
                 Estacion temporal = S[0];
-                Estacion predecesora = temporal.EtiquetaPredecesora;
-                decimal pesoAnterior = temporal.EtiquetaPesoAcumulado;
+                Estacion predecesora = temporal.EstacionPredecesora;
+                decimal pesoAnterior = temporal.PesoAcumulado;
                 S.RemoveAt(0);
                 // Lo agregamos a nuestro arreglo de soluciones
                 temporal = grafo.ElementAt(grafo.IndexOfKey(temporal)).Key;
-                temporal.EtiquetaPredecesora = predecesora;
-                temporal.EtiquetaPesoAcumulado = pesoAnterior;
+                temporal.EstacionPredecesora = predecesora;
+                temporal.PesoAcumulado = pesoAnterior;
                 minimos.Add(temporal);
                 // Obtenemos el índice
                 int indice1 = grafo.IndexOfKey(temporal);
                 int indice2 = -1;
+                // Por cada conexión con este nodo
                 foreach (Conexion conexion in temporal.Conexiones)
                 {
                     // Para cada arista que conecta con temporal
                     indice2 = grafo.IndexOfKey(conexion.Destino);
                     // No hay conexion
                     if (MatrizPesos[indice1, indice2] <= 0) continue;
+                    // Ya se calculó
                     if (minimos.Contains(conexion.Destino)) continue;
 
                     // Marcamos con la etiqueta el nodo seleccionado
-                    conexion.Destino.EtiquetaPredecesora = temporal;
-                    conexion.Destino.EtiquetaPesoAcumulado = MatrizPesos[indice1, indice2] + temporal.EtiquetaPesoAcumulado;
+                    conexion.Destino.EstacionPredecesora = temporal;
+                    conexion.Destino.PesoAcumulado = MatrizPesos[indice1, indice2] + temporal.PesoAcumulado;
 
                     // Si no existe, lo agregamos a la lista para ser procesado por el algoritmo
                     if (!S.Contains(conexion.Destino))
@@ -136,12 +138,13 @@ namespace RutApp.Graph.Entidades
                         S.Add(conexion.Destino);
                         continue;
                     }
-
+                    // Si llegó aquí es porque ya existía, entonces lo buscamos para comprobar que 
+                    // siempre esté actualizado con el menor peso
                     for (int ix = 0; ix < S.Count; ix++)
                     {
                         Estacion e = S[ix];
-                        if (e.Equals(conexion.Destino)
-                            && e.EtiquetaPesoAcumulado > conexion.Destino.EtiquetaPesoAcumulado)
+                        if (e.Equals(conexion.Destino) // Si hablamos de las mismas estaciones
+                            && e.PesoAcumulado > conexion.Destino.PesoAcumulado) // Y el peso es menor
                         {
                             S.RemoveAt(ix);
                             S.Add(conexion.Destino);
@@ -240,11 +243,7 @@ namespace RutApp.Graph.Entidades
                 }
             }
         }
+
         #endregion
-
-        private void t()
-        {
-
-        }
     }
 }
