@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "frecuencias.h"
 
 /**
@@ -8,6 +9,8 @@
  * @param caracter
  */
 void insertaFrecuencia(ListaFrecuencia * frecuencias, char caracter);
+
+void imprimeListaF(ListaFrecuencia * frecuencias);
 
 void generaFrecuencias(ListaFrecuencia * frecuencias, char caracteres[], int length) {
     // Comprobamos que la lista esté iniciada, si no lo está, la inicializamos
@@ -31,27 +34,70 @@ void insertaFrecuencia(ListaFrecuencia * frecuencias, char caracter) {
     // Buscamos si la frecuencia ya existe
     int x;
     NodoFrecuencia * f;
-    //f = frecuencias->inicio;
-    for(f = frecuencias->inicio;f != NULL; f = f->siguiente)
+    NodoFrecuencia * fanterior;
+	///DEBUG
+	///imprimeListaF(frecuencias);
+	
+    for(f = frecuencias->inicio, fanterior = frecuencias->inicio;f != NULL; f = f->siguiente)
     {
 		if (f->frecuencia.caracter == caracter) { 
             // En caso de que exista solo incrementamos sus ocurrencias
             f->frecuencia.apariciones++;
-            // y salimos de la función
+			
+			// Comprobamos que la lista siga en orden, si no, la acomodamos
+			if(f->siguiente != NULL 
+				&& f->frecuencia.apariciones > f->siguiente->frecuencia.apariciones)
+			{
+				///DEBUG
+				///printf("Superado fanterior = %c inicio= %c \n", f->frecuencia.caracter,f->siguiente->frecuencia.caracter );
+				NodoFrecuencia * auxiliar = f->siguiente;
+				if(f == frecuencias->inicio)
+				{
+					// En caso de que el elemento que se tenga que mover esté en el inicio de la lista 
+					frecuencias->inicio = f->siguiente;
+					f->siguiente = auxiliar->siguiente;
+					frecuencias->inicio->siguiente = f;
+				}
+				else
+				{
+
+				}
+			
+			}
+            // Salimos de la función
             return;
         }
-		
+		// Movemos el auxiliar a la siguiente posición
+		fanterior = f;
 	}
-    
-    // Insertamos el nodo en la lista
-    f = (NodoFrecuencia *) malloc(sizeof (NodoFrecuencia));
+	
+	// Si se llega hasta este punto significa que el nodo no existía anteriormente en la lista
+    // Insertamos el nodo en la lista, como es su primera aparición, queda al inicio
+    NodoFrecuencia * aux = frecuencias->inicio;
+	f = (NodoFrecuencia *) malloc(sizeof (NodoFrecuencia));
     f->frecuencia.caracter = caracter;
     f->frecuencia.apariciones = 1;
-
-
-    NodoFrecuencia * aux = frecuencias->inicio;
     f->siguiente = aux;
     frecuencias->inicio = f;
     frecuencias->length++;
 }
 
+
+void imprimeListaF(ListaFrecuencia * frecuencias){
+	NodoFrecuencia * f;
+    for(f = frecuencias->inicio;f != NULL; f = f->siguiente){
+		printf("%c : %d -> ",f->frecuencia.caracter,f->frecuencia.apariciones);
+	}
+	printf("\n\n");
+}
+
+Frecuencia * vectorFrecuencias(ListaFrecuencia * frecuencias){
+	Frecuencia * vector = (Frecuencia *) malloc(sizeof(Frecuencia) * frecuencias->length);
+	int i = 0;
+    NodoFrecuencia * f;
+    for(f = frecuencias->inicio;f != NULL; f = f->siguiente, i++){
+		vector[i] = f->frecuencia;
+					
+	}
+	return vector;
+}

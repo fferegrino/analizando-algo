@@ -36,7 +36,7 @@ void generaFrecuencias(ListaFrecuencia * frecuencias,char caracteres[], int leng
  * 
  * 
  */ 
-NodoFrecuencia * vectorFrecuencias(ListaFrecuencia * frecuencias);
+Frecuencia * vectorFrecuencias(ListaFrecuencia * frecuencias);
 
 #endif	/* __FRECUENCIAS_H__ */
 
