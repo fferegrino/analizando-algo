@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
     entrada = fopen(argv[1], "rb");
 	
     if (entrada == NULL) {
-        perror("No se puede abrir %s",argv[1]);
+        perror("No se puede abrir");
         return -1;
     }
     ListaFrecuencia f;
@@ -44,6 +44,7 @@ int main(int argc, char** argv) {
     fclose(entrada);
     // Imprimimos la tabla de frecuencias a un archivo para conservarla
     imprimeTablaFrecuencias(&f,argv[2]);
+    printf("\nTotal caracteres: %d\n",f.length);
     
     return (EXIT_SUCCESS);
 }
@@ -58,7 +59,6 @@ void imprimeTablaFrecuencias(ListaFrecuencia* frecuencias,const char ruta[]) {
     	
     if (tablaFrecuenciasArchivo == NULL) {
         perror("No se puede abrir archivo");
-        return -1;
     }
     NodoFrecuencia * aux = frecuencias->inicio;
     while (aux != NULL) {

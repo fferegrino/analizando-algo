@@ -12,7 +12,7 @@ void insertaFrecuencia(ListaFrecuencia * frecuencias, char caracter);
 void generaFrecuencias(ListaFrecuencia * frecuencias, char caracteres[], int length) {
     // Comprobamos que la lista esté iniciada, si no lo está, la inicializamos
     if (frecuencias->inicio == NULL) {
-        frecuencias->lenght = 0;
+        frecuencias->length = 0;
     }
     int ix;
     // Recorremos el arreglo de caracteres para insertarlos en la lista de frecuencia
@@ -52,5 +52,6 @@ void insertaFrecuencia(ListaFrecuencia * frecuencias, char caracter) {
     NodoFrecuencia * aux = frecuencias->inicio;
     f->siguiente = aux;
     frecuencias->inicio = f;
+    frecuencias->length++;
 }
 

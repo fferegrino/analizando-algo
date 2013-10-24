@@ -21,7 +21,7 @@ typedef struct nodoFrecuencia{
 
 typedef struct listaFrecuencia{
     NodoFrecuencia * inicio;
-    int lenght;
+    int length;
 }ListaFrecuencia;
 
 /**
@@ -32,6 +32,11 @@ typedef struct listaFrecuencia{
  */
 void generaFrecuencias(ListaFrecuencia * frecuencias,char caracteres[], int length);
 
+/**
+ * 
+ * 
+ */ 
+NodoFrecuencia * vectorFrecuencias(ListaFrecuencia * frecuencias);
 
 #endif	/* __FRECUENCIAS_H__ */
 
