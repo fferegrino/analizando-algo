@@ -1,0 +1,8 @@
+#!/bin/bash
+clear
+echo Pruebas iniciadas: $(date) 
+./a.out archivos/pdf1.pdf salidas/tabla.txt
+./a.out archivos/car2048.bmp salidas/tablac.txt
+./a.out archivos/hola.txt salidas/tablaF1.txt
+#./a.out archivos/lena1024.bmp salidas/tablaF.txt
+./a.out archivos/monalisa512.bmp salidas/tablaF2.txt
