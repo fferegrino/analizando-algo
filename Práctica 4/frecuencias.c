@@ -36,20 +36,21 @@ void insertaFrecuencia(ListaFrecuencia * frecuencias, char caracter) {
     NodoFrecuencia * f;
     NodoFrecuencia * fanterior;
 	///DEBUG
-	///imprimeListaF(frecuencias);
+	//imprimeListaF(frecuencias);
 	
     for(f = frecuencias->inicio, fanterior = frecuencias->inicio;f != NULL; f = f->siguiente)
     {
 		if (f->frecuencia.caracter == caracter) { 
             // En caso de que exista solo incrementamos sus ocurrencias
             f->frecuencia.apariciones++;
-			
+			int ix = 0;
 			// Comprobamos que la lista siga en orden, si no, la acomodamos
-			if(f->siguiente != NULL 
+			// TODO: 	Hacer un ciiclo para mover el elemento hasta que quede en orden
+			//			actualmente solo lo mueve una posición.
+			if( f->siguiente != NULL 
 				&& f->frecuencia.apariciones > f->siguiente->frecuencia.apariciones)
 			{
-				///DEBUG
-				///printf("Superado fanterior = %c inicio= %c \n", f->frecuencia.caracter,f->siguiente->frecuencia.caracter );
+				
 				NodoFrecuencia * auxiliar = f->siguiente;
 				if(f == frecuencias->inicio)
 				{
@@ -60,9 +61,11 @@ void insertaFrecuencia(ListaFrecuencia * frecuencias, char caracter) {
 				}
 				else
 				{
-
+					// Si el elemento se encuentra en otra posición
+					fanterior->siguiente = f->siguiente;
+					f->siguiente = fanterior->siguiente->siguiente;
+					fanterior->siguiente->siguiente = f;
 				}
-			
 			}
             // Salimos de la función
             return;
@@ -91,13 +94,36 @@ void imprimeListaF(ListaFrecuencia * frecuencias){
 	printf("\n\n");
 }
 
+/**
+ * Función para convertir de una lista de frecuencias a un vector de frecuencias
+ * @param frecuencias
+ */ 
 Frecuencia * vectorFrecuencias(ListaFrecuencia * frecuencias){
 	Frecuencia * vector = (Frecuencia *) malloc(sizeof(Frecuencia) * frecuencias->length);
-	int i = 0;
+	int i = 0, j = 0;
     NodoFrecuencia * f;
     for(f = frecuencias->inicio;f != NULL; f = f->siguiente, i++){
 		vector[i] = f->frecuencia;
-					
 	}
+	
+	Frecuencia temp;
+	
+	// Bubble sort para ordenar el vector de frecuencias de menor a mayor
+	// TODO:	Implementar un algoritmo de ordenación más eficiente
+	for(i=0;i<frecuencias->length;i++) 
+	{
+		for(j=0;j<frecuencias->length-1;j++)
+		{
+			if(vector[j].apariciones > vector[j+1].apariciones)
+			{
+				temp=vector[j];
+				vector[j]=vector[j+1];
+				vector[j+1]=temp;
+			}
+		}
+	} 
+	
 	return vector;
+	
+	
 }

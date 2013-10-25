@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
     f.inicio = NULL;
     int leidos;
     do {
-	// Leemos el archivo hasta que ya no haya que leer
+		// Leemos el archivo hasta que ya no haya que leer
         // fread nos devuelve la cantidad de datos leídos
         leidos = fread(buffer, 1, BUFFER, entrada);
         // Insertamos las frecuencias en nuestra tabla
@@ -44,6 +44,11 @@ int main(int argc, char** argv) {
     fclose(entrada);
     // Imprimimos la tabla de frecuencias a un archivo para conservarla
     imprimeTablaFrecuencias(&f,argv[2]);
+    Frecuencia * v = vectorFrecuencias(&f);
+    
+    for(leidos = 0; leidos < f.length; leidos++)
+		printf("%c | %d\n", v[leidos].caracter, v[leidos].apariciones);
+    
     printf("\nTotal caracteres: %d\n",f.length);
     
     return (EXIT_SUCCESS);
