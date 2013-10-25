@@ -52,6 +52,15 @@ Implementar el algoritmo de rotación de imágenes que emplea la técnica divide
 
 ***
 
+#### Práctica 4: "Codificación voraz de Huffman" [C]
+Implementar el algoritmo de codificación de Huffman para codificar archivos de cualquier tipo bajo lenguaje C.
+* Implementar codificación voraz de Huffman
+* Implementar el algoritmo de decodificación
+ 
+[Práctica 4](/Práctica 4)
+
+***
+
 #### Extras
 En este folder están otros códigos relacionados con la asignatura, provenientes de tareas, investigaciones o mi simple curiosidad.
 Al momento están ahí:
