@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "frecuencias.h"
+#include "codificacion.h"
 
 void imprimeTablaFrecuencias(ListaFrecuencia* frecuencias, const char ruta[]);
 
@@ -22,7 +23,6 @@ FILE * tablaFrecuenciasArchivo;
  * 
  */
 int main(int argc, char** argv) {
-	printf("Parametros %s\n",argv[1]);
     entrada = fopen(argv[1], "rb");
 	
     if (entrada == NULL) {
@@ -46,8 +46,7 @@ int main(int argc, char** argv) {
     imprimeTablaFrecuencias(&f,argv[2]);
     Frecuencia * v = vectorFrecuencias(&f);
     
-    for(leidos = 0; leidos < f.length; leidos++)
-		printf("%c | %d\n", v[leidos].caracter, v[leidos].apariciones);
+	creaArbolCodificacion(v,f.length);
     
     printf("\nTotal caracteres: %d\n",f.length);
     
@@ -61,11 +60,12 @@ int main(int argc, char** argv) {
  */
 void imprimeTablaFrecuencias(ListaFrecuencia* frecuencias,const char ruta[]) {
     tablaFrecuenciasArchivo = fopen(ruta,"w");
-    	
     if (tablaFrecuenciasArchivo == NULL) {
         perror("No se puede abrir archivo");
     }
+	fprintf(tablaFrecuenciasArchivo,"N:%d\n",frecuencias->length);
     NodoFrecuencia * aux = frecuencias->inicio;
+	// Impresión de las frecuencias al archivo especificado
     while (aux != NULL) {
         fprintf(tablaFrecuenciasArchivo,"C:%d|A:%d\n"
                 , (int) aux->frecuencia.caracter

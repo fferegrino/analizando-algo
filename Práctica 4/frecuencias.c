@@ -1,3 +1,10 @@
+/* 
+ * File:   frecuencias.c
+ * Author: fferegrino
+ *
+ * Created on 23 de octubre de 2013, 03:47 PM
+ */
+ 
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,8 +17,12 @@
  */
 void insertaFrecuencia(ListaFrecuencia * frecuencias, char caracter);
 
-void imprimeListaF(ListaFrecuencia * frecuencias);
-
+/**
+ * Función encargada de insertar los caracteres en una lista de frecuencias
+ * @param frecuencias Un apuntador a la lista
+ * @param caracteres Los caracteres a insertar
+ * @param length La longitud del arreglo de caracteres a insertar
+ */
 void generaFrecuencias(ListaFrecuencia * frecuencias, char caracteres[], int length) {
     // Comprobamos que la lista esté iniciada, si no lo está, la inicializamos
     if (frecuencias->inicio == NULL) {
@@ -85,20 +96,12 @@ void insertaFrecuencia(ListaFrecuencia * frecuencias, char caracter) {
     frecuencias->length++;
 }
 
-
-void imprimeListaF(ListaFrecuencia * frecuencias){
-	NodoFrecuencia * f;
-    for(f = frecuencias->inicio;f != NULL; f = f->siguiente){
-		printf("%c : %d -> ",f->frecuencia.caracter,f->frecuencia.apariciones);
-	}
-	printf("\n\n");
-}
-
 /**
  * Función para convertir de una lista de frecuencias a un vector de frecuencias
- * @param frecuencias
+ * @param frecuencias La lista de frecuencias a convertir
  */ 
 Frecuencia * vectorFrecuencias(ListaFrecuencia * frecuencias){
+	// Reservamos la memoria suficiente para almacenar el arreglo
 	Frecuencia * vector = (Frecuencia *) malloc(sizeof(Frecuencia) * frecuencias->length);
 	int i = 0, j = 0;
     NodoFrecuencia * f;
@@ -107,7 +110,6 @@ Frecuencia * vectorFrecuencias(ListaFrecuencia * frecuencias){
 	}
 	
 	Frecuencia temp;
-	
 	// Bubble sort para ordenar el vector de frecuencias de menor a mayor
 	// TODO:	Implementar un algoritmo de ordenación más eficiente
 	for(i=0;i<frecuencias->length;i++) 
