@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <iTunesXMLDB>C:\Users\Antonio\Music\iTunes\iTunes Music Library.xml</iTunesXMLDB>
+  <musicExtensionPattern>.mp3 .m4p .m4a .m4b .m4v</musicExtensionPattern>
+  <localDirectories>
+    <anyType xsi:type="xsd:string">F:\Música</anyType>
+  </localDirectories>
+  <cleanITunesDB>true</cleanITunesDB>
+  <cleanLocalOnly>false</cleanLocalOnly>
+  <cleanSynchro>false</cleanSynchro>
+  <addNewFiles>true</addNewFiles>
+  <recurseSubDir>true</recurseSubDir>
+  <updateTrackinfo>true</updateTrackinfo>
+  <updateIPod>false</updateIPod>
+  <closeITunes>false</closeITunes>
+</Settings>

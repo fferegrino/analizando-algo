@@ -12,6 +12,7 @@
 typedef struct frecuencia{
     char caracter;
     int apariciones;
+	char * codigo;
 }Frecuencia;
 
 typedef struct nodoFrecuencia{
@@ -33,10 +34,13 @@ typedef struct listaFrecuencia{
 void generaFrecuencias(ListaFrecuencia * frecuencias,char caracteres[], int length);
 
 /**
- * 
+ * Función encargada de regresar un arreglo de frecuencias dada una lista de ellas
+ * el arreglo resultante está ordenado de forma ascendete de acuerdo a sus apariciones
  * 
  */ 
 Frecuencia * vectorFrecuencias(ListaFrecuencia * frecuencias);
+
+void ordenaFrecuenciasPorAparicion(Frecuencia * vector, int length);
 
 #endif	/* __FRECUENCIAS_H__ */
 

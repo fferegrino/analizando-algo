@@ -15,8 +15,10 @@ typedef struct nodoArbol {
 	int peso;
 	struct nodoArbol  * nodo0;
 	struct nodoArbol  * nodo1;
+	unsigned visitado : 1;
 }NodoArbol;
 
 void creaArbolCodificacion(Frecuencia * frecuencias, int length);
+int escribeBits(char * salida, int salidaLength, long pointer, char c, Frecuencia * frecuencias, int length);
 
 #endif	/* __CODIFICACION_H__ */

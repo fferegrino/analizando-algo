@@ -103,18 +103,25 @@ void insertaFrecuencia(ListaFrecuencia * frecuencias, char caracter) {
 Frecuencia * vectorFrecuencias(ListaFrecuencia * frecuencias){
 	// Reservamos la memoria suficiente para almacenar el arreglo
 	Frecuencia * vector = (Frecuencia *) malloc(sizeof(Frecuencia) * frecuencias->length);
-	int i = 0, j = 0;
+	int i = 0;
     NodoFrecuencia * f;
     for(f = frecuencias->inicio;f != NULL; f = f->siguiente, i++){
 		vector[i] = f->frecuencia;
 	}
-	
+	ordenaFrecuenciasPorAparicion(vector,frecuencias->length);
+		
+	return vector;
+}
+
+
+void ordenaFrecuenciasPorAparicion(Frecuencia * vector, int length){
 	Frecuencia temp;
+	int i, j;
 	// Bubble sort para ordenar el vector de frecuencias de menor a mayor
 	// TODO:	Implementar un algoritmo de ordenación más eficiente
-	for(i=0;i<frecuencias->length;i++) 
+	for(i=0;i<length-1;i++) 
 	{
-		for(j=0;j<frecuencias->length-1;j++)
+		for(j=0;j<length-1;j++)
 		{
 			if(vector[j].apariciones > vector[j+1].apariciones)
 			{
@@ -124,8 +131,4 @@ Frecuencia * vectorFrecuencias(ListaFrecuencia * frecuencias){
 			}
 		}
 	} 
-	
-	return vector;
-	
-	
 }
