@@ -88,6 +88,7 @@ void generaUnicoArbol() {
 	}
 	
 }
+
 /**
  * Función encargada de la reordenación de los árboles dentro del arreglo
  */
@@ -191,6 +192,15 @@ void ordenaVectorFrecuenciasPorCaracter(Frecuencia * frecuencias, int length){
 	}
 }
 
+/**
+ * Función para modificar los bits de un arreglo de caracteres de acuerdo a los parámetros recibidos
+ * @param salida Es un arreglo de caracteres al cual se le van a modificar los bits
+ * @param salidaLength El tamaño en bits del arreglo
+ * @param pointer La posición a partir de la cual se comenzar a modificar los 
+ * @param c El caracter a codificar
+ * @param frecuencias El arreglo de las frecuencias
+ * @param length El tamaño del arreglo de frecuencias
+ */
 int escribeBits(char * salida, int salidaLength, long pointer, char c, Frecuencia * frecuencias, int length){
 	int bitsescritos;
 	int indiceFrecuencia = buscaFrecuencia(frecuencias, 0, length, c);
@@ -246,20 +256,32 @@ int buscaFrecuencia(Frecuencia * frecuencias, int inicio, int final, char c) {
 	return i;
 }
 
-void bitsCodificados(char * codificado, long inicioCodificado, long longitudCodificado, char * salida){
+/**
+ * Función encargada de convertir de un arreglo de caracteres codificado a uno sin codificar empleando
+ * el árbol de codificación previamente generado
+ * @param codificado El arreglo de caracteres leído del archivo codificado
+ * @param longitudCodificado El tamaño del arreglo codificado
+ * @param salida El arreglo de caracteres al que se debe escribir el resultado
+ */
+void decodificaBits(char * codificado, long longitudCodificado, char * salida){
 	long x = 0;
-	NodoArbol * aux = bosqueHuffman[0];
 	int v;
 	int charSalida = 0;
-	
+	// Nos posicionamos en el la raíz de nuestro árbol
+	NodoArbol * aux = bosqueHuffman[0];
+	// Navegamos entre los nodos de acuerdo al valor de los bits leídos
+	// hasta terminar de recorrerlos todos
 	for(x= 0; x < longitudCodificado;){
 		while(aux->frecuencia == NULL){
+			// Obtenemos el valor del bit y de acuerdo a este
+			// nos movemos hacia la hoja 0 o 1 de nuetro árbol
 			v = valorBit(codificado, x++);
 			if(v == 0){ aux = aux->nodo0;  }
 			else if (v == 1){ aux = aux->nodo1; }
 		}
-		//printf("%c",aux->frecuencia->caracter);
+		// Asignamos el caracter asociado al arreglo de salida
 		salida[charSalida++] = aux->frecuencia->caracter;
+		// Nos colocamos nuevamente en la raíz del árbol
 		aux = bosqueHuffman[0];
 	}
 	

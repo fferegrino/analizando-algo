@@ -35,16 +35,17 @@ int main(int argc, char** argv) {
 	
 	if(argv[1][0] == '-' && argv[1][1] == 'd') // Decompresión
 	{
-		// Apertura del archivo
-		tablaFrecuenciasArchivo = fopen(argv[2],"r");
-		entrada = fopen(argv[3],"r");
-		out = fopen(argv[4],"w"); // Abrimos un flujo de salida para guardar el nuevo archivo
-		if(tablaFrecuenciasArchivo == NULL) printf("ERR");
+		// Apertura de los flujos
+		tablaFrecuenciasArchivo = fopen(argv[2],"r"); // Abrimos la tabla de frecuencias
+		entrada = fopen(argv[3],"rb"); // Abrimos el archivo comprimido
+		out = fopen(argv[4],"wb"); // Abrimos un flujo de salida para guardar el nuevo archivo
 		
-		// Variables necesarias
-		fseek (entrada,0,SEEK_END);   // non-portable
-		long size =ftell(entrada);
-		rewind(entrada);
+		if(out == NULL) printf("Error\n");
+		if(tablaFrecuenciasArchivo == NULL) printf("Error\n");
+		if(entrada == NULL) printf("Error\n");
+		
+		// Variables auxiliares para la descompresión
+		long size;
 		char caracter;
 		int apariciones;
 		int padding;
@@ -52,21 +53,29 @@ int main(int argc, char** argv) {
 		int numeroCaracteres;
 		char basura;
 		
+		// Obtenemos el tamaño de nuestro archivo codificado
+		fseek (entrada,0,SEEK_END);
+		size = ftell(entrada);
+		rewind(entrada);
+		
 		// Leemos información importante sobre el archivo de salida
-		fscanf(tablaFrecuenciasArchivo,"N:%d",&numeroCaracteres);
+		fscanf(tablaFrecuenciasArchivo,"N:%d",&numeroCaracteres); // El número de caracteres distintos en el archivo
 		fscanf(tablaFrecuenciasArchivo,"%c",&basura); // Salto de línea
-		fscanf(tablaFrecuenciasArchivo,"P:%d",&padding);
+		fscanf(tablaFrecuenciasArchivo,"P:%d",&padding); // El número de bits "basura"
 		fscanf(tablaFrecuenciasArchivo,"%c",&basura); // Salto de línea
-		fscanf(tablaFrecuenciasArchivo,"T:%d",&tamanoOriginal);
+		fscanf(tablaFrecuenciasArchivo,"T:%d",&tamanoOriginal); // El tamaño original del archivo comprimido
 		
 		salida = (char *)malloc(sizeof(char)*tamanoOriginal);
 		codificado = (char *)malloc(sizeof(char)*size);
 		
 		// Reservamos el espacio para el arreglo de frecuencias
 		v = (Frecuencia *)malloc(sizeof(Frecuencia) * numeroCaracteres);
+		
 		// Lectura del archivo de la tabla de frecuencias para generar un arreglo
 		for(leidos = 0; leidos < numeroCaracteres; leidos++){
 			fscanf(tablaFrecuenciasArchivo,"%c",&basura); // Salto de línea
+			// Obtenemos los caracteres y su número de apariciones, para que a partir de ellos
+			// se cree el árbol de decodificación
 			fscanf(tablaFrecuenciasArchivo,"%c|%d",&caracter,&apariciones);
 			Frecuencia f;
 			f.caracter = caracter;
@@ -74,13 +83,18 @@ int main(int argc, char** argv) {
 			v[leidos] = f;
 		}
 		
+		// Cerramos el flujo de la tabla de frecuencias
+		fclose(tablaFrecuenciasArchivo);
+		
 		// Ordenamos el arreglo por las apariciones
 		ordenaFrecuenciasPorAparicion(v, numeroCaracteres);
+		// Creamos el árbol de codificación
 		creaArbolCodificacion(v,numeroCaracteres);
 		
 		// Leemos el archivo codificado
 		fread(codificado,sizeof(char),size,entrada);
-		bitsCodificados(codificado,0, (size*8)  - padding, salida);
+		fclose(entrada); // Cerramos el flujo de salida
+		decodificaBits(codificado, (size*8)  - padding, salida);
 		
 		fwrite(salida,sizeof(char),tamanoOriginal,out); // Escribimos el archivo final
 		fclose(out); // Cerramos el flujo
@@ -138,6 +152,7 @@ int main(int argc, char** argv) {
 		}while(leidos == BUFFER && resultadoEscritura >= 0);
 		
 		fclose(entrada); // Cerramos la entrada
+		
 		int bytesTotal = (bitsEscritosReal / 8); // Determinamos cuantos bytes ocupará el nuevo archivo
 		int padding = bytesTotal % 8;
 		if(padding > 0){

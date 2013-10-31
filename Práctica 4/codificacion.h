@@ -22,6 +22,6 @@ void creaArbolCodificacion(Frecuencia * frecuencias, int length);
 
 int escribeBits(char * salida, int salidaLength, long pointer, char c, Frecuencia * frecuencias, int length);
 
-void bitsCodificados(char * codificado, long inicioCodificado, long longitudCodificado, char * salida);
+void decodificaBits(char * codificado, long longitudCodificado, char * salida);
 
 #endif	/* __CODIFICACION_H__ */
