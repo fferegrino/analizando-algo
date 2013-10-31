@@ -28,6 +28,13 @@ void pon0(char * array, int pos){
 	i =  BYTE - i - 1;
 	PONE_0(array[ix],i);
 }
+
+int valorBit(char * array, int pos){
+	int ix = pos / BYTE;
+	int i = pos - (BYTE * ix);
+	i =  BYTE - i - 1;
+	return COGEBIT(array[ix],i);
+}
 	
 
 #endif	/* __BITS_H__ */

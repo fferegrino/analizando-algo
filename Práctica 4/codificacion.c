@@ -44,7 +44,7 @@ void creaArbolCodificacion(Frecuencia * frecuencias, int length) {
 	
 	// Llamado a la función encargada de realizar las combinaciones
 	generaUnicoArbol();
-	ordenaVectorFrecuenciasPorCaracter(frecuencias, length);
+	//ordenaVectorFrecuenciasPorCaracter(frecuencias, length);
 	for(i = 0; i < length; i++) {
 		// Usaremos una cola para guardar la sevuencia de 1 y 0
 		ColaCodificacion * cola = (ColaCodificacion *)malloc(sizeof(ColaCodificacion));
@@ -205,9 +205,6 @@ int escribeBits(char * salida, int salidaLength, long pointer, char c, Frecuenci
 		{
 			pon0(salida,pointer + bitsescritos);
 		}
-		else{
-			printf("Qué carajo\n");
-		}
 	}
 	return bitsescritos;
 }
@@ -230,7 +227,7 @@ void asignaCodificacion(Frecuencia * frecuencias, int length, ColaCodificacion *
 }
 
 /**
- * Función para buscar un caracter dentro del arreglo de caracteres, utiliza la búsqueda binaria para tal efecto
+ * Función para buscar un caracter dentro del arreglo de caracteres, utiliza búsqueda lineal
  * @param frecuencias
  * @param inicio
  * @param final
@@ -238,27 +235,33 @@ void asignaCodificacion(Frecuencia * frecuencias, int length, ColaCodificacion *
  */
 int buscaFrecuencia(Frecuencia * frecuencias, int inicio, int final, char c) {
 	int i = -1;
-	while(inicio<=final) 
-	{	
-		int medio=(inicio+final) / 2; 
-		// Si el numero a buscar es el mismo que el numero en el arreglo en posición 'medio'
-		if(c == frecuencias[medio].caracter)    
-		{ 
-			i = medio;
+	// TODO:	Implementar un mejor algoritmo de búsqueda
+	for(inicio = 0; inicio < final; inicio++)
+	{
+		if(frecuencias[inicio].caracter == c){
+			i = inicio;
 			break;
-		} 
-		else 
-		{ 
-			if(c < frecuencias[medio].caracter) 
-			{ 
-				final=medio-1; 
-			} 
-			else 
-			{ 
-				inicio=medio+1; 
-			} 
-		} 
+		}
 	}
 	return i;
+}
+
+void bitsCodificados(char * codificado, long inicioCodificado, long longitudCodificado, char * salida){
+	long x = 0;
+	NodoArbol * aux = bosqueHuffman[0];
+	int v;
+	int charSalida = 0;
+	
+	for(x= 0; x < longitudCodificado;){
+		while(aux->frecuencia == NULL){
+			v = valorBit(codificado, x++);
+			if(v == 0){ aux = aux->nodo0;  }
+			else if (v == 1){ aux = aux->nodo1; }
+		}
+		//printf("%c",aux->frecuencia->caracter);
+		salida[charSalida++] = aux->frecuencia->caracter;
+		aux = bosqueHuffman[0];
+	}
+	
 }
 
