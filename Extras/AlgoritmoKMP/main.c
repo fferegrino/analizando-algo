@@ -1,6 +1,6 @@
 /* 
  * File:   main.c
- * Author: Antonio
+ * Author: fferegrino
  *
  * Created on October 10, 2013, 2:55 PM
  */
@@ -39,7 +39,8 @@ int main(int argc, char** argv) {
 }
 
 /**
- * Función encargada de construir el vector de fallo
+ * Función encargada de construir el vector de fallo, vector que se forma a partir de 
+ * las coincidencias de subcadenas dentro de las cadenas a buscar
  * @param palabra La palabra en la que vamos a buscar
  * @param longitudPalabra La longitud de la palabra
  * @param vector El lugar en el que se almacenará el vector
@@ -53,16 +54,18 @@ void construyeVectorFallo(char palabra[], int longitudPalabra, int vector[]) {
     vector[0] = -1;
     vector[1] = 0;
 
-    // Relleno del vector
+    // Relleno del vector de fallo
     while (i < longitudPalabra) {
-        if (palabra[j] == palabra[i]) {
-            // Un caracter previo coincide
+        if (palabra[j] == palabra[i]) { // Un caracter previo coincide
+			// En i hubo una coincidencia previa
             vector[i] = j + 1;
+			// Nos movemos al siguiente par de caracteres
             i++;
             j++;
         } else if (j > 0) {
             j = vector[j - 1];
         } else {
+			// Hubo un fallo así que reiniciamos el contador
             vector[i] = 0;
             i++;
         }
@@ -84,28 +87,33 @@ int encuentraOcurrenciasKMP(char palabraBuscar[], char patron[], int tamanoPalab
     int rep = 0;
     // Vector de fallo
     int * vector = (int *) malloc(sizeof (int) * tamanoPalabra);
-
+	// Realizamos la comprobación de los tamapos de cadena
     if (tamanoPalabra >= tamanoPatron) {
         // Construcción de la tabla de fallo
         construyeVectorFallo(palabraBuscar, tamanoPalabra, vector);
-        
         while (m <= (tamanoPalabra - tamanoPatron)) {
-            if (patron[i] == palabraBuscar[m + i]) {
+            if (patron[i] == palabraBuscar[m + i]) { // Hubo una coincidencia
                 if (i == (tamanoPatron - 1)) {
-                    rep++; // Incremento de las ocurrencias
+					// Llegamos al fin del patrón así que 
+					// incrementamos las ocurrencias
+                    rep++; 
+					// Reubicamos los índices para buscar más coincidencias
                     m += i - vector[i];
                     if (i > 0)
                         i = vector[i];
-
                 } else {
+					// Si no hemos llegado al final de nuestro patrón,
+					// solamente incrementamos los índices
                     i++;
                 }
             } else {
+				// Reacomodamos los índices 
                 m += i - vector[i];
                 if (i > 0)
                     i = vector[i];
             }
         }
     }
+	// Regresamos la cantidad de ocurrencias
     return rep;
 }
