@@ -15,26 +15,26 @@
 #define CAMBIA(var,bpos) *(unsigned*)&var ^= PESOBIT(bpos)
 #define BYTE 8
 
-void pon1(char * array, int pos){
-	int ix = pos / BYTE;
-	int i = pos - (BYTE * ix);
-	i =  BYTE - i - 1;
-	PONE_1(array[ix],i);
-}
+/**
+ * Función encargada de poner el bit elegido en 1
+ * @param array El arreglo en el que queremos modificar
+ * @param pos La posición del bit que queremos cambiar
+ */ 
+void pon1(char * array, int pos);
 
-void pon0(char * array, int pos){
-	int ix = pos / BYTE;
-	int i = pos - (BYTE * ix);
-	i =  BYTE - i - 1;
-	PONE_0(array[ix],i);
-}
+/**
+ * Función encargada de poner el bit elegido en 0
+ * @param array El arreglo en el que queremos modificar
+ * @param pos La posición del bit que queremos cambiar
+ */
+void pon0(char * array, int pos);
 
-int valorBit(char * array, int pos){
-	int ix = pos / BYTE;
-	int i = pos - (BYTE * ix);
-	i =  BYTE - i - 1;
-	return COGEBIT(array[ix],i);
-}
+/**
+ * Función encargada de obtener el valor del bit en el arreglo
+ * @param array El arreglo en el que queremos conocer
+ * @param pos La posición del bit que queremos obtener
+ */
+int valorBit(char * array, int pos);
 	
 
 #endif	/* __BITS_H__ */

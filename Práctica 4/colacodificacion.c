@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "colacodificacion.h"
+#include "bits.h"
 
 
 void iniciaCola(ColaCodificacion * cola) {

@@ -1,43 +1,52 @@
-#include <stdio.h>
+/* 
+ * File:   bits.c
+ * Author: fferegrino
+ *
+ * Created on 3 de noviembre de 2013, 04:15 PM
+ */
 
-#define PESOBIT(bpos) 1<<bpos
-#define COGEBIT(var,bpos) (*(unsigned*)&var & PESOBIT(bpos))?1:0
-#define PONE_1(var,bpos) *(unsigned*)&var |= PESOBIT(bpos)
-#define PONE_0(var,bpos) *(unsigned*)&var &= ~(PESOBIT(bpos))
-#define CAMBIA(var,bpos) *(unsigned*)&var ^= PESOBIT(bpos)
 
-int main(void)
-{
-	int i,n_bits; //Auxiliares
-	unsigned int numero=0; //Variable de 32 bits
+#include "bits.h"
 
-	//Determinar la longitud de los bits a operar
-	printf("Número de bits\n");
-	n_bits=sizeof(numero)*8;
-	printf("%2d bits",n_bits);	
-	printf("\n");
-	
-	//Revisar el valor de cada bit
-	printf("Valor de los bits\n");
-	for (i=n_bits-1; i>=0; i--)
-	printf("%2d",COGEBIT(numero,i));
-	printf("\t%u\n",numero);
 
-	//Modificar el valor de algunos bits
-	printf("Modificar el valor de los bits\n");
-	PONE_1(numero,0); 		//1 en Bit 0
-	PONE_1(numero,3); 		//1 en Bit 3
-	PONE_1(numero,5); 		//1 en Bit 5
-	PONE_0(numero,5); 		//0 en Bit 5
-	
-	CAMBIA(numero,0);		//Negar Bit 0
-	CAMBIA(numero,3);		//Negar Bit 3
-	CAMBIA(numero,7);		//Negar Bit 7
-	CAMBIA(numero,0);		//Negar Bit 0
+/**
+ * Función encargada de poner el bit elegido en 1
+ * @param array El arreglo en el que queremos modificar
+ * @param pos La posición del bit que queremos cambiar
+ */ 
+void pon1(char * array, int pos){
+	// Obtenemos el índice dentro del arreglo
+	int ix = pos / BYTE;
+	// Obtenemos la posición del bit dentro del arreglo
+	int i = pos - (BYTE * ix);
+	i =  BYTE - i - 1;
+	PONE_1(array[ix],i);
+}
 
-	//Revisar el valor de cada bit
-	printf("Valor de los bits\n");
-	for (i=n_bits-1; i>=0; i--)
-	printf("%2d",COGEBIT(numero,i));
-	printf("\t%u\n",numero);
+/**
+ * Función encargada de poner el bit elegido en 0
+ * @param array El arreglo en el que queremos modificar
+ * @param pos La posición del bit que queremos cambiar
+ */
+void pon0(char * array, int pos){
+	// Obtenemos el índice dentro del arreglo
+	int ix = pos / BYTE;
+	// Obtenemos la posición del bit dentro del arreglo
+	int i = pos - (BYTE * ix);
+	i =  BYTE - i - 1;
+	PONE_0(array[ix],i);
+}
+
+/**
+ * Función encargada de obtener el valor del bit en el arreglo
+ * @param array El arreglo en el que queremos conocer
+ * @param pos La posición del bit que queremos obtener
+ */
+int valorBit(char * array, int pos){
+	// Obtenemos el índice dentro del arreglo
+	int ix = pos / BYTE;
+	// Obtenemos la posición del bit dentro del arreglo
+	int i = pos - (BYTE * ix);
+	i =  BYTE - i - 1;
+	return COGEBIT(array[ix],i);
 }

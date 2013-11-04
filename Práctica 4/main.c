@@ -9,6 +9,7 @@
 #include "frecuencias.h"
 #include "codificacion.h"
 #include "bits.h"
+#include "tiempo.h"
 
 void imprimeTablaFrecuencias(Frecuencia * frecuencias, int length, int padding, int byteOrginal,const char ruta[]);
 
@@ -21,6 +22,11 @@ FILE * entrada;
 FILE * tablaFrecuenciasArchivo;
 FILE * out;
 
+// Variables para controlar la medición de tiempos
+double 	usrtime11, systime11, walltime11,
+		usrtime21, systime21, walltime21,
+		real, user, sys, cpuwall;
+
 /*
  * 
  */
@@ -30,11 +36,15 @@ int main(int argc, char** argv) {
 	char * codificado;
     int leidos;
 	long leidosTotal = 0;
+	long bytesTotal = 0;
 	int bitsEscritosReal = 0;
 	Frecuencia * v;
 	
 	if(argv[1][0] == '-' && argv[1][1] == 'd') // Decompresión
 	{
+		// Iniciamos la medición de tiempos
+		uswtime(&usrtime11, &systime11, &walltime11);
+		
 		// Apertura de los flujos
 		tablaFrecuenciasArchivo = fopen(argv[2],"r"); // Abrimos la tabla de frecuencias
 		entrada = fopen(argv[3],"rb"); // Abrimos el archivo comprimido
@@ -98,9 +108,23 @@ int main(int argc, char** argv) {
 		
 		fwrite(salida,sizeof(char),tamanoOriginal,out); // Escribimos el archivo final
 		fclose(out); // Cerramos el flujo
+		
+		// Concluimos la medición de tiempos
+		uswtime(&usrtime21, &systime21, &walltime21);
+		
+		calculaTiempos(&usrtime11, &systime11, &walltime11,
+							&usrtime21, &systime21, &walltime21,
+							&real, &user, &sys, &cpuwall);
+		
+		// Imprimimos información 
+		printf("descompresion|%s|exito|%ld|%ld|%s\n",argv[2],leidosTotal,bytesTotal, argv[3]);
+		
 	}
 	else // Compresión
 	{
+		// Iniciamos la medición de tiempos
+		uswtime(&usrtime11, &systime11, &walltime11);
+		
 		ListaFrecuencia f;
 		f.inicio = NULL;
 		entrada = fopen(argv[1], "rb");
@@ -153,11 +177,12 @@ int main(int argc, char** argv) {
 		
 		fclose(entrada); // Cerramos la entrada
 		
-		int bytesTotal = (bitsEscritosReal / 8); // Determinamos cuantos bytes ocupará el nuevo archivo
+		bytesTotal = (bitsEscritosReal / 8); // Determinamos cuantos bytes ocupará el nuevo archivo
 		int padding = bytesTotal % 8;
 		if(padding > 0){
 			bytesTotal++;
 		}
+		
 		out = fopen(argv[2],"w"); // Abrimos un flujo de salida para guardar el nuevo archivo
 		fwrite(salida,sizeof(char),bytesTotal,out); // Escribimos el arreglo de chars, el cual fue modificado para contener la información
 		fclose(out); // Cerramos el flujo
@@ -166,11 +191,18 @@ int main(int argc, char** argv) {
 		// Imprimimos la tabla de frecuencias a un archivo para conservarla
 		imprimeTablaFrecuencias(v,f.length, padding, leidosTotal ,argv[3]);
 		
+		// Concluimos la medición de tiempos
+		uswtime(&usrtime21, &systime21, &walltime21);
+		
+		calculaTiempos(&usrtime11, &systime11, &walltime11,
+							&usrtime21, &systime21, &walltime21,
+							&real, &user, &sys, &cpuwall);
+		
 		// Impresión de información relevante de la compresión [Académico]
 		if(resultadoEscritura >= 0)
-			printf("%s|exito|%d|%d|%s\n",argv[1],leidosTotal,bytesTotal, argv[2]);
+			printf("compresion|%s|exito|%ld|%ld|%s\n",argv[1],leidosTotal,bytesTotal, argv[2]);
 		else
-			printf("%s|fallo|%d|%d|%s\n",argv[1],leidosTotal,bytesTotal, argv[2]);
+			printf("compresion|%s|fallo|%ld|%ld|%s\n",argv[1],leidosTotal,bytesTotal, argv[2]);
 		
 	}
 	
