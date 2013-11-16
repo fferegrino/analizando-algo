@@ -20,3 +20,9 @@ Thumbs.db
 # Results files #
 #################
 *.csv
+
+# Carpetas generadas por VS #
+#############################
+bin/
+Debug/
+Release/
