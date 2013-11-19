@@ -1,0 +1,63 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="PhoneApp.ProblemaReinas"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="clr-namespace:PhoneApp.Converters"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource vmNReinas}}" 
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <converters:NumeroReinasToGridLengthConverter x:Key="nrConverter"></converters:NumeroReinasToGridLengthConverter>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="PRÁCTICA 6" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="n reinas" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{StaticResource txHeight}"></RowDefinition>
+                <RowDefinition Height="{StaticResource tbHeight}"></RowDefinition>
+                <RowDefinition Height="{StaticResource tbHeight}"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0">Reinas</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1">Iteraciones</TextBlock>
+            <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding NumeroReinas,Mode=TwoWay}" InputScope="Number"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Iteraciones,Mode=TwoWay}" InputScope="Number"></TextBox>
+            <Button Grid.ColumnSpan="2" Grid.Row="2" Click="Button_Click">Generar solución</Button>
+            <Border Width="{Binding NumeroReinas,Converter={StaticResource nrConverter}}"
+                   Height="{Binding NumeroReinas,Converter={StaticResource nrConverter}}"
+                    Background="Crimson"
+                   Grid.ColumnSpan="2" Grid.Row="3">
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Name="TableroReinas">
+                    
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

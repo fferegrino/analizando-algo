@@ -48,13 +48,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AlgoritmosUtil\AlgoritmosUtil.csproj">
-      <Project>{f92f69d2-6a3a-47a3-bdbd-13f6635a5d6f}</Project>
-      <Name>AlgoritmosUtil</Name>
+    <ProjectReference Include="..\Algoritmos.Util\Algoritmos.Util.csproj">
+      <Project>{49f979c2-beff-48dc-9c5f-b248156ee37f}</Project>
+      <Name>Algoritmos.Util</Name>
     </ProjectReference>
     <ProjectReference Include="..\ComprobacionPrimalidad\ComprobacionPrimalidad.csproj">
-      <Project>{d4131300-54e8-460b-b6a4-ef2f5ec2b7b1}</Project>
+      <Project>{9b3c9e05-15ad-407c-9bab-cd8e41f2fe05}</Project>
       <Name>ComprobacionPrimalidad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProblemaNReinas\ProblemaNReinas.csproj">
+      <Project>{1f58fc47-db78-41ea-a878-a59bbc86cd2e}</Project>
+      <Name>ProblemaNReinas</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

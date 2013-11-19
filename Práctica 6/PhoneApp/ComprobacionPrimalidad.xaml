@@ -1,0 +1,63 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="PhoneApp.ComprobacionPrimalidad"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="clr-namespace:PhoneApp.Converters"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource vmComprobacionPrimalidad}}" 
+    shell:SystemTray.IsVisible="True">
+
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsIndeterminate="True"  IsVisible="{Binding IsBusy}"></shell:ProgressIndicator>
+    </shell:SystemTray.ProgressIndicator>
+
+    <phone:PhoneApplicationPage.Resources>
+        <converters:BooleanToColorConverter x:Key="bcConverter"></converters:BooleanToColorConverter>
+        <converters:BooleanToStringConverter x:Key="bsConverter"></converters:BooleanToStringConverter>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="PRÁCTICA 6" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="números primos" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{StaticResource txHeight}"></RowDefinition>
+                <RowDefinition Height="{StaticResource tbHeight}"></RowDefinition>
+                <RowDefinition Height="{StaticResource txHeight}"></RowDefinition>
+                <RowDefinition Height="{StaticResource tbHeight}"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0">Número a probar</TextBlock>
+            <TextBox InputScope="Number" Text="{Binding Numero,Mode=TwoWay}" Grid.Row="1"></TextBox>
+            <TextBlock Grid.Row="2">Iteraciones</TextBlock>
+            <TextBox InputScope="Number" Text="{Binding Iteraciones,Mode=TwoWay}" Grid.Row="3"></TextBox>
+            <Button Command="{Binding CompruebaCommand}" Grid.Row="4">Comprobar</Button>
+            <Border Grid.Row="5" Background="{Binding EsPrimo, Converter={StaticResource bcConverter}}">
+                <TextBlock Text="{Binding EsPrimo, Converter={StaticResource bsConverter}}" TextAlignment="Center" VerticalAlignment="Center">
+                    
+                </TextBlock>
+            </Border>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

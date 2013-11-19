@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using AlgoritmosUtil;
+using Algoritmos.Util;
+
 
 namespace ComprobacionPrimalidad
 {
     public class SupuestoPrimo
     {
         public ulong Numero { get; set; }
-        static SuperRandom sr = new SuperRandom(DateTime.Now.Millisecond);
+        static readonly SuperRandom sr = new SuperRandom(DateTime.Now.Millisecond);
 
         public SupuestoPrimo(ulong numero)
         {
