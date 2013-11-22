@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+<<<<<<< HEAD
 using ProblemaNReinas;
+=======
+using Practica6.Common;
+>>>>>>> Práctica 6 completa
 
 namespace PhoneApp.ViewModels
 {
@@ -25,6 +29,17 @@ namespace PhoneApp.ViewModels
             set { numeroReinas = value; OnPropertyChanged(); }
         }
 
+<<<<<<< HEAD
+=======
+        private bool resultado;
+
+        public bool Resultado
+        {
+            get { return resultado; }
+            set { resultado = value; OnPropertyChanged(); }
+        }
+
+>>>>>>> Práctica 6 completa
         private int iteraciones;
 
         public int Iteraciones
@@ -50,7 +65,11 @@ namespace PhoneApp.ViewModels
                     ejecutaNReinas = new ActionCommand(() =>
                     {
                         Tablero = new Tablero(NumeroReinas);
+<<<<<<< HEAD
                         Tablero.LasVegas(Iteraciones);
+=======
+                        Resultado = Tablero.LasVegas(Iteraciones);
+>>>>>>> Práctica 6 completa
                     });
                 }
                 return ejecutaNReinas;

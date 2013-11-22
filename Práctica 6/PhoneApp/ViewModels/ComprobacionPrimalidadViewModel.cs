@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+<<<<<<< HEAD
 using ComprobacionPrimalidad;
+=======
+using Practica6.Common;
+>>>>>>> Práctica 6 completa
 
 namespace PhoneApp.ViewModels
 {

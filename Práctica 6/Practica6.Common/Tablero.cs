@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Algoritmos.Util;
 using System.Threading.Tasks;
 
 
-namespace ProblemaNReinas
+namespace Practica6.Common
 {
     /// <summary>
     /// Clase que representa el tablero donde se colocarán las reinas
@@ -96,7 +95,18 @@ namespace ProblemaNReinas
         public int ReinasEnDiagonales(int i, int j)
         {
             int reinas = 0;
-            /// TODO: Implementación del método
+            int x = -1, y = -1;
+            // Checamos diagonal por diagonal:
+            for (x = i, y = j; x > 0 && y > 0; --x, --y) ;
+            for (; x < NumeroReinas - 1 && y < NumeroReinas - 1; ++x, ++y)
+            {
+                reinas += Reinas[x, y];
+            }
+            for (x = i, y = j; x < NumeroReinas - 1 && y > 0; ++x, --y) ;
+            for (; x > 0 && y < NumeroReinas - 1; --x, ++y)
+            {
+                reinas += Reinas[x, y];
+            }
             return reinas;
         }
 
@@ -122,7 +132,7 @@ namespace ProblemaNReinas
                 {
                     // Obtenemos un número aleatorio ubicado dentro de los límites del tablero
                     // para encontrar la posible ubicación de la siguiente reina
-                    fila = sr.NextInt32(0, NumeroReinas); 
+                    fila = sr.NextInt32(0, NumeroReinas);
                     // Checamos la validez de la nueva ubicación
                     ubicacionValida = ChecarValidez(columna, fila);
                 }

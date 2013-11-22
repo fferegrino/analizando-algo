@@ -8,7 +8,11 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using PhoneApp.ViewModels;
+<<<<<<< HEAD
 using ProblemaNReinas;
+=======
+using Practica6.Common;
+>>>>>>> Práctica 6 completa
 using System.Windows.Shapes;
 using System.Windows.Media;
 
@@ -50,10 +54,17 @@ namespace PhoneApp
                 for (int j = 0; j < tablero.NumeroReinas; j++)
                 {
                     Rectangle r = new Rectangle();
+<<<<<<< HEAD
                     r.SetValue(Grid.RowProperty, j);
                     r.SetValue(Grid.ColumnProperty, i);
 
                     if (((i * tablero.NumeroReinas) + j) % 2 == 0)
+=======
+                    r.SetValue(Grid.RowProperty, i);
+                    r.SetValue(Grid.ColumnProperty, j);
+
+                    if ((i  + j) % 2 == 0)
+>>>>>>> Práctica 6 completa
                         r.Fill = new SolidColorBrush(Colors.Black);
                     else
                         r.Fill = new SolidColorBrush(Colors.White);

@@ -177,6 +177,9 @@
     <ProjectReference Include="..\ProblemaNReinas\ProblemaNReinas.csproj">
       <Project>{1F58FC47-DB78-41EA-A878-A59BBC86CD2E}</Project>
       <Name>ProblemaNReinas</Name>
+    <ProjectReference Include="..\Practica6.Common\Practica6.Common.csproj">
+      <Project>{46650641-439F-444F-B0B7-56816E4DEA1A}</Project>
+      <Name>Practica6.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />

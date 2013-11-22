@@ -16,6 +16,10 @@
     shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.Resources>
+<<<<<<< HEAD
+=======
+        <converters:BooleanToColorConverter x:Key="bcConverter"></converters:BooleanToColorConverter>
+>>>>>>> Práctica 6 completa
         <converters:NumeroReinasToGridLengthConverter x:Key="nrConverter"></converters:NumeroReinasToGridLengthConverter>
     </phone:PhoneApplicationPage.Resources>
 
@@ -49,12 +53,21 @@
             <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding NumeroReinas,Mode=TwoWay}" InputScope="Number"></TextBox>
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Iteraciones,Mode=TwoWay}" InputScope="Number"></TextBox>
             <Button Grid.ColumnSpan="2" Grid.Row="2" Click="Button_Click">Generar solución</Button>
+<<<<<<< HEAD
             <Border Width="{Binding NumeroReinas,Converter={StaticResource nrConverter}}"
                    Height="{Binding NumeroReinas,Converter={StaticResource nrConverter}}"
                     Background="Crimson"
                    Grid.ColumnSpan="2" Grid.Row="3">
                 <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Name="TableroReinas">
                     
+=======
+            <Border Background="{Binding Resultado, Converter={StaticResource bcConverter}}"
+                Width="{Binding NumeroReinas,Converter={StaticResource nrConverter}}"
+                   Height="{Binding NumeroReinas,Converter={StaticResource nrConverter}}"
+                   Grid.ColumnSpan="2" Grid.Row="3">
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Name="TableroReinas">
+
+>>>>>>> Práctica 6 completa
                 </Grid>
             </Border>
         </Grid>

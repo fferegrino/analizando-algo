@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Algoritmos.Util
+namespace Practica6.Common
 {
     public class SuperRandom : Random
     {
@@ -18,17 +18,6 @@ namespace Algoritmos.Util
         {
         }
 
-        /// <summary>
-        /// Método para obtener un entero del servicio web de Random.org
-        /// </summary>
-        /// <param name="min"></param>
-        /// <param name="max"></param>
-        /// <returns></returns>
-        public int IntRandomOrg(int min, int max)
-        {
-            /// TODO: Implementación del método
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// Método para generar un entero positivo de 32 bits con signo "aleatorio"
@@ -38,7 +27,7 @@ namespace Algoritmos.Util
         /// <returns></returns>
         public int NextInt32(int min, int max)
         {
-            var buffer = new byte[sizeof(int)];
+            var buffer = new byte[sizeof(long)];
             base.NextBytes(buffer);
             int longRand = BitConverter.ToInt32(buffer, 0);
             return (Math.Abs(longRand) % (max - min)) + min;

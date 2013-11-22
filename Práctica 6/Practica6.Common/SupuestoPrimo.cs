@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Algoritmos.Util;
 
 
-namespace ComprobacionPrimalidad
+namespace Practica6.Common
 {
     public class SupuestoPrimo
     {
