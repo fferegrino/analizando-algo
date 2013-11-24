@@ -61,6 +61,24 @@ Implementar el algoritmo de codificación de Huffman para codificar archivos de 
 
 ***
 
+#### Práctica 5: "Algoritmos probabilistas numéricos" [C++]
+Implementar los siguientes algoritmos
+* Integracón de Monte Carlo
+* Algoritmo probabilista para la aproximación de Pi
+ 
+[Práctica 5](/Práctica 5)
+
+***
+
+#### Práctica 6: "Algoritmos probabilistas" [C# / XAML]
+Implementar los siguientes algoritmos
+* Comprobación de primalidad (Monte Carlo)
+* Problema de las N reinas, para 4 <= N <= 12 (Las Vegas)
+ 
+[Práctica 6](/Práctica 6)
+
+***
+
 #### Extras
 En este folder están otros códigos relacionados con la asignatura, provenientes de tareas, investigaciones o mi simple curiosidad.
 Al momento están ahí:
