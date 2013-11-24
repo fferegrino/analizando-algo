@@ -1,6 +1,9 @@
 #include <random>
 #include <iostream>
 
+#ifndef RANDOM_H
+#define RANDOM_H
+
 class Random{
 	public:
 		// Constructor
@@ -13,7 +16,6 @@ class Random{
 		// Miembros
 		std::default_random_engine generator;
 		std::uniform_int_distribution<int> distribution;	
-};  
-    
-    
-    
+};
+
+#endif

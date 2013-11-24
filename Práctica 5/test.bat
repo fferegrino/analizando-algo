@@ -1,3 +1,3 @@
-a.exe < test/test.txt
-a.exe < test/test1.txt
-a.exe < test/test2.txt
+a.exe f < test/testFuncion.txt
+a.exe p < test/testPi.txt
+

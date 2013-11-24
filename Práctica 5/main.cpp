@@ -3,33 +3,53 @@
 #include <ctime>
 #include <cmath>
 #include "Funcion.h"
+#include "Aproximacion.h"
 
 using namespace std;
 
-int main(){
+int main(int argc, char * argv[]){
 	int i = 0, j = 0;
-	// Numero de limites a evaluar
 	int numeroIteraciones = 0;
 	int iteraciones = 0;
 	int limiteSuperior = 0, limiteInferior = 0;
-	Funcion * f;
 	
-	cin >> limiteInferior;
-	cin >> limiteSuperior;
+	// Leemos la cantidad de pruebas a correr
 	cin >> numeroIteraciones;
 	
-	f = new Funcion(limiteInferior,limiteSuperior);
+	if(argv[1][0] == 'p'){ // Aproximación a PI
+		Aproximacion * apr;
+		apr = new Aproximacion();
+		
+		for(i = 0; i < numeroIteraciones; ++i){
+			cin >> iteraciones;
+			double pi = apr->Pi(iteraciones);
+			cout 	<< "pi" << "|"
+					<< iteraciones << "|"
+					<< apr->dardosAcertados << "|"
+					<< pi 
+					<< endl;
+		}
+		delete apr;
+	} else { // Integración de Monte Carlo
 	
-	for(int i = 0; i < numeroIteraciones; ++i) {
-		cin >> iteraciones;
-		cout 	<< limiteInferior << "|" 
-				<< limiteSuperior << "|" 
-				<< iteraciones << "|" 
-				<< f->Evaluar(iteraciones)
-				<< endl;
+		Funcion * f;
+		
+		cin >> limiteInferior;
+		cin >> limiteSuperior;
+		
+		f = new Funcion(limiteInferior,limiteSuperior);
+		
+		for(int i = 0; i < numeroIteraciones; ++i) {
+			cin >> iteraciones;
+			cout 	<< "funcion" << "|"
+					<< limiteInferior << "|" 
+					<< limiteSuperior << "|" 
+					<< iteraciones << "|" 
+					<< f->Evaluar(iteraciones)
+					<< endl;
+		}
+		delete f;
 	}
 	
-	delete f;
-
 	return 0;
 }

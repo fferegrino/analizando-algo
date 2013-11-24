@@ -1,6 +1,10 @@
 #include "Funcion.h"
 #include <cmath>
-
+/**
+ *
+ * @param inf El límite inferior de nuestra función
+ * @param sup El límite superior de nuestra función
+ */
 Funcion::Funcion(int inf,int sup){
 	random = new Random();
 	superior = sup;
@@ -11,10 +15,17 @@ Funcion::~Funcion(){
 	delete random;
 }
 
+
 double Funcion::Rand(){
 	return random->NextDoble(inferior, superior);
 }
 
+/**
+ * Método encargado de realizar la evaluación probabilista de la integral
+ * Vea: http://beam.acclab.helsinki.fi/~knordlun/mc/mc5nc.pdf
+ * @param iteraciones
+ * @return El valor aproximado de la integral
+ */
 double Funcion::Evaluar(int iteraciones){
 	int i = 0;
 	double resultado = 0.0;
@@ -23,11 +34,8 @@ double Funcion::Evaluar(int iteraciones){
 	for(i = 0; i < iteraciones ; i++){
 		// Obtenemos un valor aleatorio comprendido dentro del rango
 		aleatorio = Rand();
-		// Aquí se evalúa la función deseada. Debemos sustituir 
-		// todas las variables dentro de nuestra función por 
-		// el valor de nuestras variables aleatorias. En este caso, 
-		// la función es simple: (e^x) * (x^2) 
-		resultado += /*exp(aleatorio) * */ pow(aleatorio, 2.0);
+		// Ejecutamos la función que queremos integrar
+		resultado += FuncionAEvaluar(aleatorio);
 	}
 	// Obtenemos el factor de división para ajustar el resultado
 	double divisor = (superior - inferior) / (double)iteraciones;
