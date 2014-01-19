@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:build="http://schemas.microsoft.com/developer/appx/2012/build" IgnorableNamespaces="build">
+  <Identity Name="c527782f-ea03-4e18-98b7-da41d59d40af" Version="1.0.0.0" Publisher="CN=Antonio" />
+  <Properties>
+    <DisplayName>HuffmanRC.App</DisplayName>
+    <PublisherDisplayName>Antonio</PublisherDisplayName>
+    <Logo>images\storelogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.3.0</OSMinVersion>
+    <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" StartPage="default.html">
+      <m2:VisualElements DisplayName="HuffmanRC.App" Description="HuffmanRC.App" ForegroundText="light" BackgroundColor="#464646" Square150x150Logo="images\Logo.png" Square30x30Logo="images\SmallLogo.png">
+        <m2:SplashScreen Image="images\splashscreen.png" />
+      </m2:VisualElements>
+      <Extensions>
+        <Extension Category="windows.fileSavePicker">
+          <FileSavePicker>
+            <SupportedFileTypes>
+              <FileType>.hcf</FileType>
+              <FileType>.hst</FileType>
+            </SupportedFileTypes>
+          </FileSavePicker>
+        </Extension>
+        <Extension Category="windows.fileOpenPicker">
+          <FileOpenPicker>
+            <SupportedFileTypes>
+              <SupportsAnyFileType />
+            </SupportedFileTypes>
+          </FileOpenPicker>
+        </Extension>
+        <Extension Category="windows.fileTypeAssociation">
+          <FileTypeAssociation Name="huffmansymbolstable">
+            <DisplayName>Huffman Symbols Table</DisplayName>
+            <SupportedFileTypes>
+              <FileType>.hst</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
+        <Extension Category="windows.fileTypeAssociation">
+          <FileTypeAssociation Name="huffmancompressedfile">
+            <DisplayName>Huffman Compresed File</DisplayName>
+            <SupportedFileTypes>
+              <FileType>.hcf</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
+        <Extension Category="windows.fileTypeAssociation">
+          <FileTypeAssociation Name="xml">
+            <DisplayName>Xml</DisplayName>
+            <SupportedFileTypes>
+              <FileType>.xml</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <build:Metadata>
+    <build:Item Name="Blend" Version="12.0.41002.1" />
+  </build:Metadata>
+  <Capabilities>
+    <Capability Name="documentsLibrary" />
+  </Capabilities>
+</Package>
